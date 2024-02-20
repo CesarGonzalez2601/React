@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
 import { add, close, pencil } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
+import { removeCustomer, saveCustomer, searchCustomers } from './CustomerApi';
 
 const CustomerList: React.FC = () => {
 
@@ -14,28 +15,33 @@ const CustomerList: React.FC = () => {
   }, []);
   
   const search = () => {
-    const datosDeEjemplo = [
-      {
-        id:'1',
-        firstname: 'Lucas',
-        lastname: 'Moy',
-        phone:'12345678',
-        email:'dasd',
-        addres:'skdasd'
-      },
-      {
-        id:'2',
-        firstname: 'Cesar',
-        lastname: 'Gonzalez',
-        phone:'12345678',
-        email:'dasd',
-        addres:'skdasd'
-      }
-    ]
-    
-    setClientes(datosDeEjemplo);
+  
+    let result = searchCustomers();
+    setClientes(result);
 
   }
+
+  const remove = (id:string) => {
+
+    removeCustomer(id);
+    search();
+
+  }
+
+  const pruebaLocalStorage = () => {
+    const ejemplo = {
+      id:'1',
+      fistname:'Cesar',
+      lastname:'Gonzalez',
+      email:'cesar1234',
+      phone:'72727272',
+      address:'sadsadasd'
+    }
+
+    saveCustomer(ejemplo);
+    search();
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -80,7 +86,7 @@ const CustomerList: React.FC = () => {
             <IonButton fill="clear" color="primary">
               <IonIcon icon={pencil} slot="icon-only"/>
             </IonButton>
-            <IonButton fill="clear" color="danger">
+            <IonButton onClick={() => remove(cliente.id)} fill="clear" color="danger">
               <IonIcon icon={close} slot="icon-only"/>
             </IonButton>
           </IonCol>
@@ -89,6 +95,11 @@ const CustomerList: React.FC = () => {
         }
       </IonGrid>
       </IonCard>
+
+      <IonButton onClick={pruebaLocalStorage} fill="clear" color="danger">Prueba local Storage
+              <IonIcon icon={close} slot="icon-only"/>
+            </IonButton>
+
       </IonContent>
     </IonPage>
   );
