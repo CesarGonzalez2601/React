@@ -3,13 +3,13 @@ import { useHistory, useLocation, useParams } from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
 import { add, close, pencil } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
-import { removeCustomer, saveCustomer, searchCustomers } from './CustomerApi';
-import Customer from './Customer';
+import { removeVendor, saveVendor, searchVendors } from './VendorApi';
+import Vendor from './Vendor';
 
-const CustomerList: React.FC = () => {
+const VendorList: React.FC = () => {
 
   const { name } = useParams<{ name: string; id: string;}>();
-  const [clientes, setClientes] = useState<Customer[]>([]);
+  const [clientes, setClientes] = useState<Vendor[]>([]);
   const history = useHistory();
   const location = useLocation();
   useEffect(() => {
@@ -17,25 +17,25 @@ const CustomerList: React.FC = () => {
   }, [location.pathname]);
   
   const search = () => {
-    let result = searchCustomers();
+    let result = searchVendors();
     setClientes(result);
   }
 
   const remove = (id:string) => {
 
-    removeCustomer(id);
+    removeVendor(id);
     search();
 
   }
 
   
 
-  const addCustomer = () => {
-    history.push('customer/new');
+  const addVendor = () => {
+    history.push('vendor/new');
 }
 
-const editCustomer = (id:string) => {
-  history.push('customer/' + id);
+const editVendor = (id:string) => {
+  history.push('vendor/' + id);
 }
 
   return (
@@ -56,11 +56,11 @@ const editCustomer = (id:string) => {
           </IonToolbar>
         </IonHeader>
         <IonCard>
-          <IonTitle>Gestion de Clientes</IonTitle>
+          <IonTitle>Gestion de Empleados</IonTitle>
           <IonItem>
-            <IonButton onClick={addCustomer} color="primary" fill="solid" slot="end" size="default">
+            <IonButton onClick={addVendor} color="primary" fill="solid" slot="end" size="default">
             <IonIcon icon={add}/>
-              Agregar Cliente
+              Agregar Empleado
             </IonButton>
           </IonItem>
         <IonGrid className="table">
@@ -72,14 +72,14 @@ const editCustomer = (id:string) => {
           <IonCol>Acciones</IonCol>
         </IonRow>
         {
-          clientes.map((cliente:Customer) =>
+          clientes.map((cliente:Vendor) =>
             <IonRow >
           <IonCol>{cliente.firstname}{cliente.lastname}</IonCol>
           <IonCol>{cliente.email}</IonCol>
           <IonCol>{cliente.phone}</IonCol>
           <IonCol>{cliente.address}</IonCol>
           <IonCol>
-            <IonButton onClick={() => editCustomer(String(cliente.id))} fill="clear" color="primary">
+            <IonButton onClick={() => editVendor(String(cliente.id))} fill="clear" color="primary">
               <IonIcon icon={pencil} slot="icon-only"/>
             </IonButton>
             <IonButton onClick={() => remove(String(cliente.id))} fill="clear" color="danger">
@@ -96,4 +96,4 @@ const editCustomer = (id:string) => {
   );
 };
 
-export default CustomerList;
+export default VendorList;

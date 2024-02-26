@@ -23,6 +23,10 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import CustomerEdit from './pages/customer/CustomerEdit';
+import EmployeeList from './pages/employee/EmployeeList';
+import EmployeeEdit from './pages/employee/EmployeeEdit';
+import VendorList from './pages/vendor/VendorList';
+import VendorEdit from './pages/vendor/VendorEdit';
 
 setupIonicReact();
 
@@ -43,6 +47,25 @@ const App: React.FC = () => {
             <Route path="/folder/customer/:id" exact={true}> {/* Corrige la ruta para que coincida con la redirección */}
               <CustomerEdit />
             </Route>
+
+            <Route path="/folder/employees" exact={true}> {/* Corrige la ruta para que coincida con la redirección */}
+              <EmployeeList />
+            </Route>
+
+            <Route path="/folder/employee/:id" exact={true}> {/* Corrige la ruta para que coincida con la redirección */}
+              <EmployeeEdit />
+            </Route>
+
+            <Route path="/folder/vendors" exact={true}> {/* Corrige la ruta para que coincida con la redirección */}
+              <VendorList/>
+            </Route>
+
+            <Route path="/folder/vendor/:id" exact={true}> {/* Corrige la ruta para que coincida con la redirección */}
+              <VendorEdit />
+            </Route>
+
+
+
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

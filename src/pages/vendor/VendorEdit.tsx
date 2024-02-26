@@ -1,13 +1,13 @@
 import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { useHistory, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import { saveCustomer, searchCustomerById, searchCustomers } from './CustomerApi';
+import { saveVendor, searchVendorById, searchVendors } from './VendorApi';
 import { checkmark } from 'ionicons/icons';
-import Customer from './Customer';
+import Vendor from './Vendor';
 
-const CustomerEdit: React.FC = () => {
+const VendorEdit: React.FC = () => {
   const { name, id } = useParams<{ name: string; id: string; }>();
-  const [customer, setCustomer] = useState<Customer>({});
+  const [vendor, setVendor] = useState<Vendor>({});
 
   const history = useHistory();
 
@@ -17,22 +17,22 @@ const CustomerEdit: React.FC = () => {
 
   const search = () => {
     if(id !== 'new'){
-      let result = searchCustomerById(id);
-      setCustomer(result);
+      let result = searchVendorById(id);
+      setVendor(result);
     }
 
     // Implementa la lógica de búsqueda si es necesario
   }
 
   const save = () => {
-    saveCustomer(customer);
+    saveVendor(vendor);
     search;
-    history.push('/folder/customers');
+    history.push('/folder/vendors');
   }
 
   const handleInputChange = (key: string, value: string) => {
-    setCustomer((prevCustomer: any) => ({
-      ...prevCustomer,
+    setVendor((prevVendor: any) => ({
+      ...prevVendor,
       [key]: value
     }));
   };
@@ -50,7 +50,7 @@ const CustomerEdit: React.FC = () => {
 
       <IonContent fullscreen>
         <IonCard>
-          <IonTitle>{id === 'new' ? 'Agregar Cliente' : 'Editar Cliente'}</IonTitle>
+          <IonTitle>{id === 'new' ? 'Agregar Vendedor' : 'Editar Vendedor'}</IonTitle>
 
           <IonRow>
             <IonCol>
@@ -60,7 +60,7 @@ const CustomerEdit: React.FC = () => {
                   label="First Name"
                   labelPlacement="stacked"
                   placeholder="Enter text"
-                  value={customer.firstname}
+                  value={vendor.firstname}
                 ></IonInput>
               </IonItem>
             </IonCol>
@@ -71,7 +71,7 @@ const CustomerEdit: React.FC = () => {
                   label="Last Name"
                   labelPlacement="stacked"
                   placeholder="Enter text"
-                  value={customer.lastname}
+                  value={vendor.lastname}
                 ></IonInput>
               </IonItem>
             </IonCol>
@@ -85,7 +85,7 @@ const CustomerEdit: React.FC = () => {
                   label="Email"
                   labelPlacement="stacked"
                   placeholder="Enter text"
-                  value={customer.email}
+                  value={vendor.email}
                 ></IonInput>
               </IonItem>
             </IonCol>
@@ -96,7 +96,7 @@ const CustomerEdit: React.FC = () => {
                   label="Address"
                   labelPlacement="stacked"
                   placeholder="Enter text"
-                  value={customer.address}
+                  value={vendor.address}
                 ></IonInput>
               </IonItem>
             </IonCol>
@@ -110,7 +110,7 @@ const CustomerEdit: React.FC = () => {
                   label="Phone"
                   labelPlacement="stacked"
                   placeholder="Enter text"
-                  value={customer.phone}
+                  value={vendor.phone}
                 ></IonInput>
               </IonItem>
             </IonCol>
@@ -119,7 +119,7 @@ const CustomerEdit: React.FC = () => {
           <IonItem>
             <IonButton onClick={save} color="success" fill="solid" slot="end" size="default">
               <IonIcon icon={checkmark} />
-              Guardar Cliente
+              Guardar Empleado
             </IonButton>
           </IonItem>
         </IonCard>
@@ -128,5 +128,5 @@ const CustomerEdit: React.FC = () => {
   );
 };
 
-export default CustomerEdit;
+export default VendorEdit;
 

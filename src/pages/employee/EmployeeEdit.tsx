@@ -1,13 +1,13 @@
 import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { useHistory, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import { saveCustomer, searchCustomerById, searchCustomers } from './CustomerApi';
+import { saveEmployee, searchEmployeeById, searchEmployees } from './EmployeeApi';
 import { checkmark } from 'ionicons/icons';
-import Customer from './Customer';
+import Employee from './Employee';
 
-const CustomerEdit: React.FC = () => {
+const EmployeeEdit: React.FC = () => {
   const { name, id } = useParams<{ name: string; id: string; }>();
-  const [customer, setCustomer] = useState<Customer>({});
+  const [employee, setEmployee] = useState<Employee>({});
 
   const history = useHistory();
 
@@ -17,22 +17,22 @@ const CustomerEdit: React.FC = () => {
 
   const search = () => {
     if(id !== 'new'){
-      let result = searchCustomerById(id);
-      setCustomer(result);
+      let result = searchEmployeeById(id);
+      setEmployee(result);
     }
 
     // Implementa la lógica de búsqueda si es necesario
   }
 
   const save = () => {
-    saveCustomer(customer);
+    saveEmployee(employee);
     search;
-    history.push('/folder/customers');
+    history.push('/folder/employees');
   }
 
   const handleInputChange = (key: string, value: string) => {
-    setCustomer((prevCustomer: any) => ({
-      ...prevCustomer,
+    setEmployee((prevEmployee: any) => ({
+      ...prevEmployee,
       [key]: value
     }));
   };
@@ -50,7 +50,7 @@ const CustomerEdit: React.FC = () => {
 
       <IonContent fullscreen>
         <IonCard>
-          <IonTitle>{id === 'new' ? 'Agregar Cliente' : 'Editar Cliente'}</IonTitle>
+          <IonTitle>{id === 'new' ? 'Agregar Empleado' : 'Editar Empleado'}</IonTitle>
 
           <IonRow>
             <IonCol>
@@ -60,7 +60,7 @@ const CustomerEdit: React.FC = () => {
                   label="First Name"
                   labelPlacement="stacked"
                   placeholder="Enter text"
-                  value={customer.firstname}
+                  value={employee.firstname}
                 ></IonInput>
               </IonItem>
             </IonCol>
@@ -71,7 +71,7 @@ const CustomerEdit: React.FC = () => {
                   label="Last Name"
                   labelPlacement="stacked"
                   placeholder="Enter text"
-                  value={customer.lastname}
+                  value={employee.lastname}
                 ></IonInput>
               </IonItem>
             </IonCol>
@@ -85,7 +85,7 @@ const CustomerEdit: React.FC = () => {
                   label="Email"
                   labelPlacement="stacked"
                   placeholder="Enter text"
-                  value={customer.email}
+                  value={employee.email}
                 ></IonInput>
               </IonItem>
             </IonCol>
@@ -96,7 +96,7 @@ const CustomerEdit: React.FC = () => {
                   label="Address"
                   labelPlacement="stacked"
                   placeholder="Enter text"
-                  value={customer.address}
+                  value={employee.address}
                 ></IonInput>
               </IonItem>
             </IonCol>
@@ -110,7 +110,7 @@ const CustomerEdit: React.FC = () => {
                   label="Phone"
                   labelPlacement="stacked"
                   placeholder="Enter text"
-                  value={customer.phone}
+                  value={employee.phone}
                 ></IonInput>
               </IonItem>
             </IonCol>
@@ -119,7 +119,7 @@ const CustomerEdit: React.FC = () => {
           <IonItem>
             <IonButton onClick={save} color="success" fill="solid" slot="end" size="default">
               <IonIcon icon={checkmark} />
-              Guardar Cliente
+              Guardar Empleado
             </IonButton>
           </IonItem>
         </IonCard>
@@ -128,5 +128,5 @@ const CustomerEdit: React.FC = () => {
   );
 };
 
-export default CustomerEdit;
+export default EmployeeEdit;
 
