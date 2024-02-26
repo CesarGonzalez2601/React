@@ -1,5 +1,5 @@
 import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import { useHistory, useParams } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
 import { add, close, pencil } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
@@ -7,18 +7,17 @@ import { removeCustomer, saveCustomer, searchCustomers } from './CustomerApi';
 
 const CustomerList: React.FC = () => {
 
-  const { name } = useParams<{ name: string; }>();
+  const { name } = useParams<{ name: string; id: string;}>();
   const [clientes, setClientes] = useState<any>([]);
   const history = useHistory();
-  useEffect(()=> {
+  const location = useLocation();
+  useEffect(() => {
     search();
-  }, []);
+  }, [location.pathname]);
   
   const search = () => {
-  
     let result = searchCustomers();
     setClientes(result);
-
   }
 
   const remove = (id:string) => {
@@ -44,6 +43,10 @@ const CustomerList: React.FC = () => {
 
   const addCustomer = () => {
     history.push('customer/new');
+}
+
+const editCustomer = (id:string) => {
+  history.push('customer/' + id);
 }
 
   return (
@@ -85,9 +88,9 @@ const CustomerList: React.FC = () => {
           <IonCol>{cliente.firstname}{cliente.lastname}</IonCol>
           <IonCol>{cliente.email}</IonCol>
           <IonCol>{cliente.phone}</IonCol>
-          <IonCol>{cliente.addres}</IonCol>
+          <IonCol>{cliente.address}</IonCol>
           <IonCol>
-            <IonButton fill="clear" color="primary">
+            <IonButton onClick={() => editCustomer(cliente.id)} fill="clear" color="primary">
               <IonIcon icon={pencil} slot="icon-only"/>
             </IonButton>
             <IonButton onClick={() => remove(cliente.id)} fill="clear" color="danger">

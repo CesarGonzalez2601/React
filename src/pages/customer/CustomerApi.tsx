@@ -20,9 +20,20 @@ export function removeCustomer(id: string){
 }
 
 export function saveCustomer(customer:any){
+    let customers = searchCustomers();
+    if (customer.id){
+        let indice = customers.findIndex((c:any) => c.id == customer.id);
+        customers[indice] = customer;
+    }else{
+            customer.id = Math.round(Math.random() * 100000);
+            customer.push(customer);
+        }
+    localStorage['customers'] = JSON.stringify(customers);
+}
+
+export function searchCustomerById(id: string){
 
     let customers = searchCustomers();
+    return customers.find((customer:any) => customer.id == id);
     
-    customers.push(customer)
-    localStorage['customers'] = JSON.stringify(customers);
 }
